@@ -21,6 +21,7 @@ type Client struct {
 	client    *http.Client
 	// Room gives access to the /room part of the API.
 	Room *RoomService
+	User *UserService
 }
 
 // NewClient returns a new HipChat API client. You must provide a valid
@@ -37,6 +38,7 @@ func NewClient(authToken string) *Client {
 		client:    http.DefaultClient,
 	}
 	c.Room = &RoomService{client: c}
+	c.User = &UserService{client: c}
 	return c
 }
 
