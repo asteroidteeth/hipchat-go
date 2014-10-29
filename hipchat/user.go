@@ -58,6 +58,20 @@ func (s *UserService) List() (*Users, *http.Response, error) {
 	return users, resp, nil
 }
 
+func (s *UserService) Get(id int) (*User, *http.Response, error) {
+	req, err := s.client.NewRequest("GET", fmt.Sprintf("user/%d", id), nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	user := new(User)
+	resp, err := s.client.Do(req, user)
+	if err != nil {
+		return nil, resp, err
+	}
+	return user, resp, nil
+}
+
 func (s *UserService) Message(id int, msgReq *UserMessageRequest) (*http.Response, error) {
 	reqUrl := fmt.Sprintf("user/%d/message", id)
 	req, err := s.client.NewRequest("POST", reqUrl, msgReq)
